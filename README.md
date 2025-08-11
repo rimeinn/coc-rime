@@ -1,7 +1,7 @@
 # coc-rime
 
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/tonyfettes/coc-rime/master.svg)](https://results.pre-commit.ci/latest/github/tonyfettes/coc-rime/master)
-[![github/workflow](https://github.com/tonyfettes/coc-rime/actions/workflows/main.yml/badge.svg)](https://github.com/tonyfettes/coc-rime/actions)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/rimeinn/coc-rime/master.svg)](https://results.pre-commit.ci/latest/github/rimeinn/coc-rime/master)
+[![github/workflow](https://github.com/rimeinn/coc-rime/actions/workflows/main.yml/badge.svg)](https://github.com/rimeinn/coc-rime/actions)
 
 Rime input method integration of coc.nvim
 
@@ -9,7 +9,7 @@ Rime input method integration of coc.nvim
 
 ![screenshot](https://user-images.githubusercontent.com/29998228/111900984-6c20ef00-8a70-11eb-9920-4d9da5102a48.gif)
 
-![screencast](https://github.com/tonyfettes/coc-rime/assets/32936898/2a31084e-b7a4-4d6a-a6da-e3e85ae83c33)
+![screencast](https://github.com/rimeinn/coc-rime/assets/32936898/2a31084e-b7a4-4d6a-a6da-e3e85ae83c33)
 
 ## Dependencies
 
@@ -89,4 +89,4 @@ MIT
 
 ## Related Projects
 
-- [rime.nvim](https://github.com/Freed-Wu/rime.nvim): lua implementation
+- [rime.nvim](https://github.com/rimeinn/rime.nvim): lua implementation
