@@ -1,65 +1,12 @@
 #include <napi.h>
 #include <rime_api.h>
 
+#include "traits.h"
+
 using Napi::Addon, Napi::Env, Napi::CallbackInfo, Napi::Value, Napi::Object,
     Napi::Array, Napi::String, Napi::Number, Napi::Boolean, Napi::HandleScope;
 
 #define DEFAULT_BUFFER_SIZE 1024
-
-/*! \class Traits : public Object
- *  \brief provide traits()
- *
- *  traits() generates RimeTraits
- */
-class Traits : public Object {
-  RimeTraits _traits = {};
-
-public:
-  Traits(napi_env env, napi_value value) : Object(env, value) {
-    RIME_STRUCT_INIT(RimeTraits, this->_traits);
-    if (this->Has("shared_data_dir"))
-      this->shared_data_dir =
-          this->Get("shared_data_dir").As<String>().Utf8Value().c_str();
-    if (this->Has("user_data_dir"))
-      this->user_data_dir =
-          this->Get("user_data_dir").As<String>().Utf8Value().c_str();
-    if (this->Has("log_dir"))
-      this->log_dir = this->Get("log_dir").As<String>().Utf8Value().c_str();
-    if (this->Has("distribution_name"))
-      this->distribution_name =
-          this->Get("distribution_name").As<String>().Utf8Value().c_str();
-    if (this->Has("distribution_code_name"))
-      this->distribution_code_name =
-          this->Get("distribution_code_name").As<String>().Utf8Value().c_str();
-    if (this->Has("distribution_version"))
-      this->distribution_version =
-          this->Get("distribution_version").As<String>().Utf8Value().c_str();
-    if (this->Has("app_name"))
-      this->app_name = this->Get("app_name").As<String>().Utf8Value().c_str();
-    if (this->Has("min_log_level"))
-      this->min_log_level =
-          this->Get("min_log_level").As<Number>().Int64Value();
-  }
-  RimeTraits &traits() {
-    this->_traits.shared_data_dir = this->shared_data_dir;
-    this->_traits.user_data_dir = this->user_data_dir;
-    this->_traits.log_dir = this->log_dir;
-    this->_traits.distribution_name = this->distribution_name;
-    this->_traits.distribution_code_name = this->distribution_code_name;
-    this->_traits.distribution_version = this->distribution_version;
-    this->_traits.app_name = this->app_name;
-    this->_traits.min_log_level = this->min_log_level;
-    return this->_traits;
-  };
-  const char *shared_data_dir = "";
-  const char *user_data_dir = "";
-  const char *log_dir = "";
-  const char *distribution_name = "Rime";
-  const char *distribution_code_name = "rime.coc-rime";
-  const char *distribution_version = "0.0.1";
-  const char *app_name = "coc-rime";
-  int64_t min_log_level = 3;
-};
 
 /*! \class SchemaListItem : public Object
  *  \brief provide New()
@@ -203,11 +150,11 @@ class Rime : public Addon<Rime> {
 
 public:
   Rime(Env env, Object exports) {
+    Traits::Init(env, exports);
     this->rime = rime_get_api();
     DefineAddon(
         exports,
         {
-            InstanceMethod("init", &Rime::init, napi_enumerable),
             InstanceMethod("create_session", &Rime::create_session,
                            napi_enumerable),
             InstanceMethod("destroy_session", &Rime::destroy_session,
@@ -229,16 +176,6 @@ public:
   }
 
 protected:
-  Value init(const CallbackInfo &info) {
-    RimeTraits traits;
-    if (info[0].IsNull())
-      traits = info[0].As<Traits>().traits();
-    else
-      traits = Object::New(info.Env()).As<Traits>().traits();
-    rime->setup(&traits);
-    rime->initialize(&traits);
-    return info.Env().Undefined();
-  }
   Value create_session(const CallbackInfo &info) {
     return Number::New(info.Env(), rime->create_session());
   }

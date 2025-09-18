@@ -23,7 +23,7 @@ export class Rime {
 
   constructor(traits: Traits, ui: UI) {
     this.ui = ui;
-    binding.init(traits);
+    new binding.Traits(traits);
     this.sessionId = binding.create_session();
     for (const specialKey of specialKeys) {
       const keyname = specialKey.replace('Page', 'Page_');

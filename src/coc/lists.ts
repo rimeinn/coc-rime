@@ -1,12 +1,11 @@
 import { BasicList, ListAction, ListContext, ListItem, Neovim, window, StatusBarItem } from 'coc.nvim';
 
-import { RimeSchema, Rime } from './rime';
+import { Rime } from './rime';
 
 export default class SchemaList extends BasicList {
   public readonly name = 'rime_schema';
   public readonly description = 'Schema list of Rime';
   public readonly defaultAction = 'open';
-  public schemaList: RimeSchema[] = [];
   public actions: ListAction[] = [];
 
   private rime: Rime;
