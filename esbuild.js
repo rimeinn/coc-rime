@@ -1,15 +1,17 @@
+const { dtsPlugin } = require("esbuild-plugin-d.ts");
 /* eslint-disable @typescript-eslint/no-var-requires */
 async function start() {
   await require('esbuild').build({
-    entryPoints: ['src/index.ts'],
+    entryPoints: ['src/index.ts', 'src/binding.ts'],
+    plugins: [dtsPlugin({})],
     bundle: true,
     minify: process.env.NODE_ENV === 'production',
     sourcemap: process.env.NODE_ENV === 'development',
     mainFields: ['module', 'main'],
-    external: ['coc.nvim', 'node:os'],
+    external: ['coc.nvim'],
     platform: 'node',
     target: 'node10.12',
-    outfile: 'lib/index.js',
+    outdir: 'lib',
   });
 }
 

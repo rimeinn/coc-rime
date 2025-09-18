@@ -2,7 +2,7 @@ import {workspace, NvimFloatOptions, Window, window} from 'coc.nvim';
 import stringWidth from 'string-width';
 
 import {UI} from './config';
-import {Traits} from '../binding';
+import {traits} from '../binding';
 import {Context, Schema, Commit} from '../binding';
 import binding from '../binding';
 import modifiers from '../data/modifiers.json';
@@ -21,7 +21,7 @@ export class Rime {
   private schemaId: string;
   private win: Window | null = null;
 
-  constructor(traits: Traits, ui: UI) {
+  constructor(traits: traits, ui: UI) {
     this.ui = ui;
     new binding.Traits(traits);
     this.sessionId = binding.create_session();
@@ -597,8 +597,8 @@ export class Rime {
     });
   }
 
-  async setSchema(schemaId: string): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
+  async setSchema(schemaId: string): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
       try {
         resolve(binding.select_schema(this.sessionId, schemaId));
         this.schemaId = schemaId;

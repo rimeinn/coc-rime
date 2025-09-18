@@ -4,7 +4,7 @@ import expandTilde from 'expand-tilde';
 import expandenv from 'expandenv';
 import { workspace, WorkspaceConfiguration, ExtensionContext } from 'coc.nvim';
 
-import { Traits } from '../binding';
+import { traits } from '../binding';
 
 async function get_dir(...dirs: string[]): Promise<string> {
   for (const dir of dirs) {
@@ -45,7 +45,7 @@ export class Config {
     return this.cfg.get<string>('shortcut');
   }
   get traits() {
-    return new Promise<Traits>(async (res, reject) => {
+    return new Promise<traits>(async (res, reject) => {
       let shared_data_dir = this.cfg.get<string | string[] | null>('traits.shared_data_dir');
       let user_data_dir = this.cfg.get<string | string[] | null>('traits.user_data_dir');
       let log_dir = this.cfg.get<string | null>('traits.log_dir');

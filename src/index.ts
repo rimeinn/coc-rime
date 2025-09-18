@@ -71,6 +71,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
       userConfig.shortcut,
       null,
       {
+        // @ts-ignore
         async provideCompletionItems(
           document: TextDocument,
           position: Position,
