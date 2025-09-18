@@ -1,11 +1,16 @@
+import { realpathSync, mkdirSync } from 'fs';
 import { realpath, mkdir } from 'fs/promises';
+
+import expandTilde from 'expand-tilde';
+import expandenv from 'expandenv';
 import { workspace, WorkspaceConfiguration, ExtensionContext } from 'coc.nvim';
+
 import { Traits } from './binding';
 
 async function get_dir(...dirs: string[]): Promise<string> {
   for (const dir of dirs) {
     try {
-      return await realpath(eval('`' + dir + '`'));
+      return await realpath(expandTilde(expandenv(dir)));
     } catch (_e) {}
   }
   return '';

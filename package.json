@@ -1,35 +1,22 @@
 {
   "name": "coc-rime",
   "version": "0.1.5",
-  "description": "Rime input method integration of coc.nvim",
   "author": "Tony Fettes <feihaoxiang2014@gmail.com>",
-  "license": "MIT",
   "main": "lib/index.js",
-  "keywords": ["coc.nvim", "rime"],
-  "engines": {
-    "coc": "^0.0.80"
-  },
-  "scripts": {
-    "lint": "biome lint",
-    "clean": "rimraf lib",
-    "watch": "node esbuild.js --watch",
-    "prepack": "xmake -y && xmake install && pkg-prebuilds-copy --baseDir build/Release --source rime.node --name=rime --strip --napi_version=7 && node esbuild.js",
-    "prepare": "npm-run-all clean prepack"
-  },
   "devDependencies": {
-    "@types/mkdirp": "^0.5.2",
+    "@types/expand-tilde": "^2.0.2",
     "biome": "^0.3.3",
     "coc.nvim": "^0.0.80",
     "esbuild": "^0.20.2",
-    "mkdirp": "^0.5.1",
+    "expand-tilde": "^2.0.2",
+    "expandenv": "^1.0.0",
     "npm-run-all": "^4.1.5",
     "pkg-prebuilds": "^1.0.0",
     "rimraf": "^5.0.5",
     "typescript": "^4.1.2",
     "vscode-languageserver-protocol": "^3.14.1",
     "vscode-languageserver-textdocument": "^1.0.1",
-    "vscode-languageserver-types": "^3.14.0",
-    "xmake-build-system": "2.9.7"
+    "vscode-languageserver-types": "^3.14.0"
   },
   "activationEvents": ["*"],
   "contributes": {
@@ -69,7 +56,7 @@
             }
           ],
           "default": [
-            "${process.env.PREFIX}/share/rime-data",
+            "$PREFIX/share/rime-data",
             "/usr/share/rime-data",
             "/run/current-system/sw/share/rime-data",
             "/sdcard/rime-data"
@@ -89,9 +76,9 @@
             }
           ],
           "default": [
-            "${process.env.HOME}/.config/ibus/rime",
-            "${process.env.HOME}/.config/fcitx/rime",
-            "${process.env.HOME}/.local/share/fcitx5/rime",
+            "~/.config/ibus/rime",
+            "~/.config/fcitx/rime",
+            "~/.local/share/fcitx5/rime",
             "/sdcard/rime"
           ],
           "description": "user data directory of rime. `null` will not use user data (just use shared data)"
@@ -186,5 +173,18 @@
       }
     ]
   },
-  "packageManager": "yarn@4.1.1+sha256.f3cc0eda8e5560e529c7147565b30faa43b4e472d90e8634d7134a37c7f59781"
+  "description": "Rime input method integration of coc.nvim",
+  "engines": {
+    "coc": "^0.0.80"
+  },
+  "keywords": ["coc.nvim", "rime"],
+  "license": "MIT",
+  "packageManager": "yarn@4.1.1+sha256.f3cc0eda8e5560e529c7147565b30faa43b4e472d90e8634d7134a37c7f59781",
+  "scripts": {
+    "lint": "biome lint",
+    "clean": "rimraf lib",
+    "watch": "node esbuild.js --watch",
+    "prepack": "xmake -y && xmake install && pkg-prebuilds-copy --baseDir build/Release --source rime.node --name=rime --strip --napi_version=7 && node esbuild.js",
+    "prepare": "npm-run-all clean prepack"
+  }
 }

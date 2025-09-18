@@ -1,6 +1,7 @@
 import { existsSync } from 'fs';
 import { resolve } from 'path';
-import { default as build, Options } from 'pkg-prebuilds';
+import { Options } from 'pkg-prebuilds';
+import build from 'pkg-prebuilds';
 import { execSync } from 'child_process';
 
 const options: Options = { name: 'rime', napi_versions: [7] };

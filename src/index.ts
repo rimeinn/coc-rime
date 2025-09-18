@@ -1,6 +1,7 @@
 import { commands, ExtensionContext, listManager, CompletionContext, window, workspace, languages } from 'coc.nvim';
 import { Position, CancellationToken, CompletionList, Range } from 'vscode-languageserver-protocol';
 import { TextDocument } from 'vscode-languageserver-textdocument';
+
 import SchemaList from './lists';
 import { Rime } from './rime';
 import { Config } from './config';
@@ -142,7 +143,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
                 }
                 inputRange.start = document.positionAt(offset);
                 rime
-                  .getContextWithAllCandidates(inputString)
+                  .getFullContext(inputString)
                   .then((res) => {
                     if (
                       res !== null &&
