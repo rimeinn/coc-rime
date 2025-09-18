@@ -2,11 +2,11 @@ import {workspace, NvimFloatOptions, Window, window} from 'coc.nvim';
 import stringWidth from 'string-width';
 
 import {UI} from './config';
-import {Traits} from './binding';
-import {Context, Schema, Commit} from './binding';
-import binding from './binding';
-import modifiers from './modifiers.json';
-import keys from './keys.json';
+import {Traits} from '../binding';
+import {Context, Schema, Commit} from '../binding';
+import binding from '../binding';
+import modifiers from '../data/modifiers.json';
+import keys from '../data/keys.json';
 
 const specialKeys = ['Up', 'Down', 'Left', 'Right', 'Home', 'End', 'PageUp', 'PageDown'];
 

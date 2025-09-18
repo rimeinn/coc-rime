@@ -2,9 +2,9 @@ import { commands, ExtensionContext, listManager, CompletionContext, window, wor
 import { Position, CancellationToken, CompletionList, Range } from 'vscode-languageserver-protocol';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
-import SchemaList from './lists';
-import { Rime } from './rime';
-import { Config } from './config';
+import SchemaList from './coc/lists';
+import { Rime } from './coc/rime';
+import { Config } from './coc/config';
 
 let rime: Rime;
 

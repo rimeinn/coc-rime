@@ -1,4 +1,5 @@
 import { BasicList, ListAction, ListContext, ListItem, Neovim, window, StatusBarItem } from 'coc.nvim';
+
 import { RimeSchema, Rime } from './rime';
 
 export default class SchemaList extends BasicList {
