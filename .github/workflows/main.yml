@@ -42,9 +42,15 @@ jobs:
             mingw-w64-x86_64-librime mingw-w64-x86_64-nodejs \
             mingw-w64-x86_64-gcc git
           ln -s c++ /mingw64/bin/cxx
-      - name: Enable corepack
+      - name: Install dependencies
+        if: runner.os == 'Linux'
         run: |
-          corepack enable
+          sudo apt-get -y update
+          sudo apt-get -y install librime-dev librime1
+      - name: Install dependencies
+        if: runner.os == 'macOS'
+        run: |
+          brew install librime
       - uses: actions/setup-node@v4
         # it uses cmd on windows, not msys2
         if: runner.os != 'Windows'
@@ -57,15 +63,6 @@ jobs:
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: latest
-      - name: Install dependencies
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get -y update
-          sudo apt-get -y install librime-dev librime1
-      - name: Install dependencies
-        if: runner.os == 'macOS'
-        run: |
-          brew install librime
       - name: Build
         # bun pm pack
         # pkg-prebuilds-copy: command not found
