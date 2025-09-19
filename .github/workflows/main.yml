@@ -58,17 +58,28 @@ jobs:
           node-version: latest
           registry-url: https://registry.npmjs.org
       - uses: oven-sh/setup-bun@v2
+        # it uses cmd on windows, not msys2
+        if: runner.os != 'Windows'
         with:
           bun-version: latest
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: latest
       - name: Build
+        if: runner.os != 'Windows'
         # bun pm pack
         # pkg-prebuilds-copy: command not found
         run: |
           bun install
           bun test
+          npm pack
+        env:
+          NODE_ENV: production
+      - name: Build
+        if: runner.os == 'Windows'
+        run: |
+          npm install
+          npm test
           npm pack
         env:
           NODE_ENV: production
