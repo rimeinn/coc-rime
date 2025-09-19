@@ -1,10 +1,11 @@
-import { mkdir } from 'fs/promises';
+import {mkdir} from 'fs/promises';
 
-import { workspace, WorkspaceConfiguration, ExtensionContext } from 'coc.nvim';
+import {workspace, WorkspaceConfiguration, ExtensionContext} from 'coc.nvim';
 
-import { traits } from '../binding';
-import { UI } from '../ui';
-import { get_dir } from '../session';
+import {Traits} from '../binding';
+import binding from '../binding';
+import {UI} from '../ui';
+import {get_dir} from '../session';
 
 export class Config {
   private cfg: WorkspaceConfiguration;
@@ -27,7 +28,7 @@ export class Config {
     return this.cfg.get<string>('shortcut');
   }
   get traits() {
-    return new Promise<traits>(async (res, reject) => {
+    return new Promise<Traits>(async (res, reject) => {
       let shared_data_dir = this.cfg.get<string | string[] | null>('traits.shared_data_dir');
       let user_data_dir = this.cfg.get<string | string[] | null>('traits.user_data_dir');
       let log_dir = this.cfg.get<string | null>('traits.log_dir');
@@ -50,7 +51,7 @@ export class Config {
         min_log_level: this.cfg.get<0 | 1 | 2 | 3>('traits.min_log_level'),
       };
       try {
-        res(traits);
+        res(new binding.Traits(traits));
       } catch (e) {
         reject(e);
       }

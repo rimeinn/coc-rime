@@ -2,7 +2,7 @@ const {dtsPlugin} = require("esbuild-plugin-d.ts");
 /* eslint-disable @typescript-eslint/no-var-requires */
 async function start() {
   await require('esbuild').build({
-    entryPoints: ['src/index.ts', 'src/binding.ts', 'src/session.ts', 'src/ui.ts', 'src/session.ts'],
+    entryPoints: ['src/index.ts', 'src/binding.ts', 'src/session.ts', 'src/ui.ts', 'src/session.ts', 'src/key.ts'],
     plugins: [dtsPlugin({})],
     bundle: true,
     minify: process.env.NODE_ENV === 'production',

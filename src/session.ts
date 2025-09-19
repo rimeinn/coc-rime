@@ -7,6 +7,7 @@ import expandenv from 'expandenv';
 import binding from './binding';
 import {traits, Traits, Context, Schema, Commit} from './binding';
 import pkg from '../package.json';
+import {key_to_rime} from './key';
 
 const properties = pkg.contributes.configuration.properties;
 
@@ -91,5 +92,32 @@ export class Session {
       }
     }
     return text;
+  }
+
+  parse_key(basic: string, modifiers_keys: string[]): boolean {
+    const [code, mask] = key_to_rime(basic, modifiers_keys);
+    return this.process_key(code, mask);
+  }
+
+  getFullContext(input: string): Context {
+    for (const singleChar of input) {
+      this.parse_key(singleChar, []);
+    }
+    let context = this.get_context();
+    const result = context;
+    if (input !== '')
+      while (!context.menu.is_last_page) {
+        this.parse_key('=', []);
+        context = this.get_context();
+        result.menu.num_candidates += context.menu.num_candidates;
+        if (result.menu?.select_keys && context.menu?.select_keys) {
+          result.menu.select_keys.push(...context.menu.select_keys);
+        }
+        if (result.menu?.candidates && context.menu?.candidates) {
+          result.menu.candidates.push(...context.menu.candidates);
+        }
+      }
+    this.clear_composition()
+    return result;
   }
 }
