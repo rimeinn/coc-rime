@@ -11,6 +11,11 @@ Rime input method integration of coc.nvim
 
 ![screencast](https://github.com/rimeinn/coc-rime/assets/32936898/2a31084e-b7a4-4d6a-a6da-e3e85ae83c33)
 
+This project is consist of two parts:
+
+- A nodejs binding of librime
+- An IME for coc.nvim
+
 ## Dependencies
 
 - [librime](https://github.com/rime/librime)
@@ -49,7 +54,37 @@ CocInstall coc-rime
 let g:coc_global_extensions = ['coc-rime', 'other coc-plugins']
 ```
 
-## Commands
+## Usage
+
+### Binding
+
+```javascript
+import {
+    Session
+} from 'coc-rime/session';
+import {
+    UI
+} from 'coc-rime/ui';
+
+let session = new Session();
+let ui = new UI();
+if (not session.process_key('n'.charCodeAt(0), 0))
+    throw Error;
+let context = session.get_context();
+if (context === null)
+    throw Error;
+let content, _ = ui.draw(context);
+console.log(content.join("\n"));
+```
+
+```text
+n|
+[① 你]② 那 ③ 呢 ④ 能 ⑤ 年 ⑥ 您 ⑦ 内 ⑧ 拿 ⑨ 哪 ⓪ 弄 |>
+```
+
+### IME
+
+#### Commands
 
 1. `rime.source.enable`: enable this source temporarily.
 2. `rime.source.disable`: disable this source temporarily.
@@ -58,7 +93,7 @@ let g:coc_global_extensions = ['coc-rime', 'other coc-plugins']
 5. `rime.disable`: disable this IME temporarily.
 6. `rime.toggle`: toggle this IME temporarily.
 
-## Lists
+#### Lists
 
 You could use `CocList` to switch between schema.
 
@@ -66,7 +101,7 @@ You could use `CocList` to switch between schema.
 :CocList rime_schema
 ```
 
-## User Configuration
+#### User Configuration
 
 1. `rime.enabled`: Whether to enable this source.
 2. `rime.priority`: The priority of this completion source.
@@ -78,7 +113,7 @@ You could use `CocList` to switch between schema.
 7. `rime.traits.*`: More rime traits
 8. `rime.ui.*`: The symbols used for IME UI
 
-## Limitations
+#### Limitations
 
 - It will break all `imap <Buffer>` created by other plugins, such as
   [vim-peekaboo](http://github.com/junegunn/vim-peekaboo)'s `<C-R>`.
