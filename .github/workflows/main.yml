@@ -54,6 +54,9 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: latest
       - name: Install dependencies
         if: runner.os == 'Linux'
         run: |

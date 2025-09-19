@@ -9,5 +9,5 @@ do
     set_languages("cxx17")
     add_rules("nodejs.module")
     add_packages("rime", "node-addon-api")
-    add_files("src/*.cc")
+    add_files("src/rime/*.cc")
 end
