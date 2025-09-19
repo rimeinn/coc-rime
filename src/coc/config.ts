@@ -5,6 +5,7 @@ import expandenv from 'expandenv';
 import { workspace, WorkspaceConfiguration, ExtensionContext } from 'coc.nvim';
 
 import { traits } from '../binding';
+import { ui } from '../ui';
 
 async function get_dir(...dirs: string[]): Promise<string> {
   for (const dir of dirs) {
@@ -13,15 +14,6 @@ async function get_dir(...dirs: string[]): Promise<string> {
     } catch (_e) {}
   }
   return '';
-}
-
-export interface UI {
-  indices: string[];
-  left: string;
-  right: string;
-  left_sep: string;
-  right_sep: string;
-  cursor: string;
 }
 
 export class Config {
@@ -77,7 +69,7 @@ export class Config {
       }
     });
   }
-  get ui() {
+  get ui(): ui {
     return {
       indices: this.cfg.get<string[]>('ui.indices'),
       left: this.cfg.get<string>('ui.left'),

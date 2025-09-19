@@ -15,7 +15,7 @@ export interface traits {
   min_log_level?: 0 | 1 | 2 | 3;
 }
 
-declare class Traits implements traits {
+export declare class Traits implements traits {
   shared_data_dir?: string | null;
   user_data_dir?: string | null;
   log_dir?: string | null;
@@ -67,7 +67,7 @@ export interface Commit {
 export interface Binding {
   Traits: typeof Traits;
   create_session: () => bigint;
-  destroy_session: (id: bigint) => undefined;
+  destroy_session: (id: bigint) => void;
   get_current_schema: (id: bigint) => string;
   get_schema_list: () => Schema[];
   select_schema: (id: bigint, schema_id: string) => boolean;
@@ -75,7 +75,7 @@ export interface Binding {
   get_context: (id: bigint) => Context;
   get_commit: (id: bigint) => Commit;
   commit_composition: (id: bigint) => boolean;
-  clear_composition: (id: bigint) => boolean;
+  clear_composition: (id: bigint) => void;
 }
 
 let binding: Binding;

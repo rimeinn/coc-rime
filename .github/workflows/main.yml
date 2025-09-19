@@ -51,7 +51,6 @@ jobs:
         with:
           node-version: latest
           registry-url: https://registry.npmjs.org
-          cache: 'yarn'
       - name: Install dependencies
         if: runner.os == 'Linux'
         run: |
@@ -62,9 +61,12 @@ jobs:
         run: |
           brew install librime
       - name: Build
+        # bun pm pack
+        # pkg-prebuilds-copy: command not found
         run: |
-          yarn install
-          yarn pack
+          bun install
+          bun test
+          npm pack
         env:
           NODE_ENV: production
       - uses: actions/upload-artifact@v4
