@@ -1,7 +1,7 @@
 import {workspace, NvimFloatOptions, Window, window} from 'coc.nvim';
 import stringWidth from 'string-width';
 
-import {ui as UI} from '../ui';
+import {UI} from '../ui';
 import {traits} from '../binding';
 import {Context, Schema, Commit} from '../binding';
 import binding from '../binding';

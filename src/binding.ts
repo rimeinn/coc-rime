@@ -1,8 +1,9 @@
-import {existsSync} from 'fs';
 import {resolve} from 'path';
+import {existsSync} from 'fs';
+import {execSync} from 'child_process';
+
 import {Options} from 'pkg-prebuilds';
 import build from 'pkg-prebuilds';
-import {execSync} from 'child_process';
 
 export interface traits {
   shared_data_dir?: string | null;

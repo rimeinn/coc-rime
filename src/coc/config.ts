@@ -1,20 +1,10 @@
-import { realpath, mkdir } from 'fs/promises';
+import { mkdir } from 'fs/promises';
 
-import expandTilde from 'expand-tilde';
-import expandenv from 'expandenv';
 import { workspace, WorkspaceConfiguration, ExtensionContext } from 'coc.nvim';
 
 import { traits } from '../binding';
-import { ui } from '../ui';
-
-async function get_dir(...dirs: string[]): Promise<string> {
-  for (const dir of dirs) {
-    try {
-      return await realpath(expandTilde(expandenv(dir)));
-    } catch (_e) {}
-  }
-  return '';
-}
+import { UI } from '../ui';
+import { get_dir } from '../session';
 
 export class Config {
   private cfg: WorkspaceConfiguration;
@@ -43,15 +33,12 @@ export class Config {
       let log_dir = this.cfg.get<string | null>('traits.log_dir');
       if (log_dir === '') log_dir = this.context.storagePath;
       if (log_dir !== null) {
-        // if logDir doesn't exist:
-        // In GNU/Linux, log will be disabled
-        // In Android, an ::__fs::filesystem::filesystem_error will be threw
         try {
           await mkdir(log_dir);
         } catch (_e) {}
       }
-      if (typeof shared_data_dir === 'object') shared_data_dir = await get_dir(...shared_data_dir);
-      if (typeof user_data_dir === 'object') user_data_dir = await get_dir(...user_data_dir);
+      if (typeof shared_data_dir === 'object') shared_data_dir = get_dir(...shared_data_dir);
+      if (typeof user_data_dir === 'object') user_data_dir = get_dir(...user_data_dir);
       const traits = {
         shared_data_dir: shared_data_dir,
         user_data_dir: user_data_dir,
@@ -69,14 +56,14 @@ export class Config {
       }
     });
   }
-  get ui(): ui {
-    return {
+  get ui(): UI {
+    return new UI({
       indices: this.cfg.get<string[]>('ui.indices'),
       left: this.cfg.get<string>('ui.left'),
       right: this.cfg.get<string>('ui.right'),
       left_sep: this.cfg.get<string>('ui.left_sep'),
       right_sep: this.cfg.get<string>('ui.right_sep'),
       cursor: this.cfg.get<string>('ui.cursor'),
-    };
+    });
   }
 }

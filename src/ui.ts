@@ -1,6 +1,9 @@
 import stringWidth from 'string-width';
 
 import {Context} from './binding';
+import pkg from '../package.json';
+
+const properties = pkg.contributes.configuration.properties;
 
 export interface ui {
   indices: string[];
@@ -11,6 +14,15 @@ export interface ui {
   cursor: string;
 }
 
+export const default_ui = {
+  indices: properties["rime.ui.indices"].default,
+  left: properties["rime.ui.left"].default,
+  right: properties["rime.ui.right"].default,
+  left_sep: properties["rime.ui.left_sep"].default,
+  right_sep: properties["rime.ui.right_sep"].default,
+  cursor: properties["rime.ui.cursor"].default,
+};
+
 export class UI implements ui {
   indices: string[];
   left: string;
@@ -19,25 +31,7 @@ export class UI implements ui {
   right_sep: string;
   cursor: string;
 
-  constructor(ui: ui = {
-    indices: [
-      "①",
-      "②",
-      "③",
-      "④",
-      "⑤",
-      "⑥",
-      "⑦",
-      "⑧",
-      "⑨",
-      "⓪"
-    ],
-    left: "<|",
-    right: "|>",
-    left_sep: "[",
-    right_sep: "]",
-    cursor: "|",
-  }) {
+  constructor(ui: ui = default_ui) {
     this.indices = ui.indices;
     this.left = ui.left;
     this.right = ui.right;

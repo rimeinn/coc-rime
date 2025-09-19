@@ -1,12 +1,48 @@
+import {realpathSync, mkdirSync} from 'fs';
+import {homedir} from 'os';
+
+import expandTilde from 'expand-tilde';
+import expandenv from 'expandenv';
+
 import binding from './binding';
-import {Traits, Context, Schema, Commit} from './binding';
+import {traits, Traits, Context, Schema, Commit} from './binding';
+import pkg from '../package.json';
+
+const properties = pkg.contributes.configuration.properties;
+
+export function get_dir(...dirs: string[]): string {
+  for (const dir of dirs) {
+    try {
+      return realpathSync(expandTilde(expandenv(dir)));
+    } catch (_e) {}
+  }
+  return '';
+}
+
+export const default_traits: traits = {
+  shared_data_dir: get_dir(...properties["rime.traits.shared_data_dir"].default),
+  user_data_dir: get_dir(...properties["rime.traits.user_data_dir"].default),
+  log_dir: homedir() + "/.config/coc/extensions/coc-rime-data",
+  distribution_name: properties["rime.traits.distribution_name"].default,
+  distribution_code_name: properties["rime.traits.distribution_code_name"].default,
+  distribution_version: properties["rime.traits.distribution_version"].default,
+  app_name: properties["rime.traits.app_name"].default,
+  // @ts-ignore
+  min_log_level: properties["rime.traits.min_log_level"].default,
+}
 
 export class Session {
   traits: Traits;
   id: bigint;
 
-  constructor(traits: Traits | null) {
-    this.traits = traits;
+  constructor(traits?: Traits) {
+    this.traits = traits || new binding.Traits(default_traits);
+    if (this.traits.log_dir !== null) {
+      // if logDir doesn't exist:
+      // In GNU/Linux, log will be disabled
+      // In Android, an ::__fs::filesystem::filesystem_error will be threw
+      mkdirSync(this.traits.log_dir, {recursive: true})
+    }
     this.id = binding.create_session();
   }
 
