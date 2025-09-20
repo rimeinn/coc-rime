@@ -14,7 +14,7 @@ Rime input method integration of coc.nvim
 This project is consist of two parts:
 
 - A nodejs binding of librime
-- An IME for coc.nvim
+- A librime frontend on coc.nvim
 
 ## Dependencies
 
@@ -82,7 +82,7 @@ n|
 [① 你]② 那 ③ 呢 ④ 能 ⑤ 年 ⑥ 您 ⑦ 内 ⑧ 拿 ⑨ 哪 ⓪ 弄 |>
 ```
 
-### IME
+### Frontend
 
 #### Commands
 
@@ -124,4 +124,5 @@ MIT
 
 ## Related Projects
 
-- [rime.nvim](https://github.com/rimeinn/rime.nvim): lua implementation
+- [rime.nvim](https://github.com/rimeinn/rime.nvim): lua implementation.
+  Active maintenance.
