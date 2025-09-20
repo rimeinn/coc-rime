@@ -78,7 +78,7 @@ jobs:
       - name: Build
         if: runner.os == 'Windows'
         run: |
-          npm install
+          npm install --force
           npm test
           npm pack
         env:
