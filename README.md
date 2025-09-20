@@ -122,7 +122,7 @@ You could use `CocList` to switch between schema.
 
 MIT
 
-## Related Projects
+## Similar Projects
 
 - [rime.nvim](https://github.com/rimeinn/rime.nvim): lua implementation.
   Active maintenance.
