@@ -22,7 +22,7 @@ export class Rime {
       return {text, lines: [], col: 0}
     }
     const context = this.session.get_context()
-    if (context === null || context.menu.num_candidates === 0)
+    if (context === null || (context.menu.num_candidates === 0 && context.composition.preedit === null))
       return {text: this.session.get_commit_text(), lines: [], col: 0}
     const {lines, col} = this.ui.draw(context)
     return {text: "", lines, col}
